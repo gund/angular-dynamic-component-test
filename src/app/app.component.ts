@@ -1,5 +1,5 @@
-import { Test2Component } from './components/test2/test2.component';
 import { Test1Component } from './components/test1/test1.component';
+import { Test2Component } from './components/test2/test2.component';
 import { Component } from '@angular/core';
 
 @Component({
@@ -30,6 +30,6 @@ export class AppComponent {
   }
 
   onOut1(data: any) {
-    console.log('out1', data);
+    console.log('out1 in AppComponent', data);
   }
 }
