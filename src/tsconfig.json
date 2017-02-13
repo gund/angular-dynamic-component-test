@@ -8,6 +8,7 @@
       "es2016",
       "dom"
     ],
+    "noEmitHelpers": true,
     "mapRoot": "./",
     "module": "es2015",
     "moduleResolution": "node",

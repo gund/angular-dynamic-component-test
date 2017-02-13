@@ -2,12 +2,14 @@ import {
   ComponentRef,
   Directive,
   DoCheck,
+  Inject,
   Injector,
   Input,
   KeyValueChangeRecord,
   KeyValueDiffers,
   OnChanges,
   OnDestroy,
+  OpaqueToken,
   SimpleChange,
   SimpleChanges,
   Type
@@ -17,6 +19,8 @@ import { Subject } from 'rxjs/Subject';
 export interface ComponentInjector {
   componentRef: ComponentRef<any>;
 }
+
+export const COMPONENT_INJECTOR = new OpaqueToken('ComponentInjector');
 
 export const UNINITIALIZED = Object.freeze({ __uninitialized: true });
 
@@ -31,19 +35,14 @@ export class CustomSimpleChange extends SimpleChange {
 })
 export class DynamicDirective implements OnChanges, DoCheck, OnDestroy {
 
-  static COMPONENT_INJECTOR: Type<ComponentInjector>;
-
   @Input() appDynamicInputs: { [k: string]: any } = {};
   @Input() appDynamicOutputs: { [k: string]: Function } = {};
 
+  private _componentInjector: ComponentInjector = this._injector.get(this._componentInjectorType) as any;
   private _lastComponentInst: any = this._componentInjector;
   private _lastInputChanges: SimpleChanges;
   private _inputsDiffer = this._differs.find(this.appDynamicInputs).create(null);
   private _destroyed$ = new Subject<void>();
-
-  private get _componentInjector(): ComponentInjector {
-    return this._injector.get(DynamicDirective.COMPONENT_INJECTOR) as any;
-  }
 
   private get _componentInst(): any {
     return this._componentInjector.componentRef && this._componentInjector.componentRef.instance;
@@ -60,7 +59,8 @@ export class DynamicDirective implements OnChanges, DoCheck, OnDestroy {
 
   constructor(
     private _differs: KeyValueDiffers,
-    private _injector: Injector
+    private _injector: Injector,
+    @Inject(COMPONENT_INJECTOR) private _componentInjectorType: Type<ComponentInjector>
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
