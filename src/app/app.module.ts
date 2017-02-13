@@ -19,7 +19,7 @@ import { BrowserModule } from '@angular/platform-browser';
     BrowserModule,
     FormsModule,
     HttpModule,
-    DynamicModule.forRoot([
+    DynamicModule.withComponents([
       Test1Component,
       Test2Component
     ])
