@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'app works!';
   component = this.getComponent();
   inputs = { prop1: '123' };
+  outputs = { out1: this.onOut1.bind(this) };
 
   changeComponent() {
     this.component = this.getComponent();
@@ -26,5 +27,9 @@ export class AppComponent {
 
   getComponent() {
     return Math.random() > 0.5 ? Test1Component : Test2Component;
+  }
+
+  onOut1(data: any) {
+    console.log('out1', data);
   }
 }

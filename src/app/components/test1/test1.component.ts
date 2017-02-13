@@ -1,5 +1,6 @@
+import { Observable } from 'rxjs/Rx';
 import { BaseComponent } from '../base/base.component';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-test1',
@@ -9,5 +10,6 @@ import { Component, Input } from '@angular/core';
 export class Test1Component extends BaseComponent {
 
   @Input() prop1: string;
+  @Output() out1 = Observable.interval(1000).take(10);
 
 }
