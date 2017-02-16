@@ -11,8 +11,7 @@ import {
   OnDestroy,
   OpaqueToken,
   SimpleChange,
-  SimpleChanges,
-  Type
+  SimpleChanges
 } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
@@ -38,7 +37,7 @@ export class DynamicDirective implements OnChanges, DoCheck, OnDestroy {
   @Input() appDynamicInputs: { [k: string]: any } = {};
   @Input() appDynamicOutputs: { [k: string]: Function } = {};
 
-  private _componentInjector: ComponentInjector = this._injector.get(this._componentInjectorType) as any;
+  private _componentInjector: ComponentInjector = this._injector.get(this._componentInjectorType);
   private _lastComponentInst: any = this._componentInjector;
   private _lastInputChanges: SimpleChanges;
   private _inputsDiffer = this._differs.find(this.appDynamicInputs).create(null);
@@ -60,7 +59,7 @@ export class DynamicDirective implements OnChanges, DoCheck, OnDestroy {
   constructor(
     private _differs: KeyValueDiffers,
     private _injector: Injector,
-    @Inject(COMPONENT_INJECTOR) private _componentInjectorType: Type<ComponentInjector>
+    @Inject(COMPONENT_INJECTOR) private _componentInjectorType: ComponentInjector
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {

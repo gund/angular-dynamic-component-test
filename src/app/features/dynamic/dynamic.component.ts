@@ -1,3 +1,4 @@
+import { ComponentInjector } from './dynamic.directive';
 import {
   Component,
   ComponentFactoryResolver,
@@ -16,7 +17,7 @@ import {
   selector: 'app-dynamic',
   template: ''
 })
-export class DynamicComponent implements OnChanges {
+export class DynamicComponent implements OnChanges, ComponentInjector {
 
   @Input() appDynamicComponent: Type<any>;
   @Input() appDynamicInjector: Injector;
